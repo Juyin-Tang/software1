@@ -37,5 +37,8 @@ kilograms = grams/1000
 print(f"{kilograms} kilograms and {grams} grams.")
 
 #6
-
-def random_list(0,9)
+import random
+dig_3 = str([random.randint(1,9) for i in range(3)])
+dig_4 = str([random.randint(1,6) for i in range(4)])
+print("3-digit code:" + dig_3)
+print("4-digit code:" + dig_4)
