@@ -30,11 +30,13 @@ print("The product is " + str(product))
 talents = float(input("Enter your number of talents: "))
 pounds =  float(input("Enter your number of pounds: "))
 lots = float(input("Enter your number of luoti: "))
-pounds += talents * 20
-lots += pounds * 32
-grams = lots * 13.3
-kilograms = grams/1000
-print(f"{kilograms} kilograms and {grams} grams.")
+lotsingrams = 13.3
+poundsingrams = lotsingrams * 32
+talentsingrams = poundsingrams * 20
+grams = lots * lotsingrams + talents * talentsingrams + pounds * poundsingrams
+kilograms = int(grams/1000)
+gramsoutput = grams % 1000
+print(f"{kilograms} kilograms and {gramsoutput:.2f} grams.")
 
 #6
 import random
