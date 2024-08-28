@@ -66,3 +66,16 @@ if name == right_name and password == right_password:
     print("Welcome")
 
 #6
+import random
+random_points = int(input("enter number of points: "))
+
+inside_circle = 0
+points = 0
+while points < random_points:
+    x = random.uniform(-1,1)
+    y = random.uniform(-1,1)
+    if x**2 + y**2 <= 1:
+        inside_circle += 1
+    points += 1
+pai = 4 * inside_circle / random_points
+print(f"the approximation of pi is {pai}")
