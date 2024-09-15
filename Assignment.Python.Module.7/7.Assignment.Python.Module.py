@@ -46,3 +46,58 @@ while choice != 3:
   elif choice == 3:
     break
   choice = int(input("what would you like to do? "))
+
+#8.1
+import mysql.connector
+
+def get_location_by_ICOA(ICAO):
+    sql = f"SELECT id,ident, name, latitude_deg, longitude_deg FROM airport WHERE ident='{ICAO}'"
+    print(sql)
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    if cursor.rowcount >0 :
+        for row in result:
+            print(f"Hello! The airport {row[2]}（ICAO:{row[1]}） is located at latitude {row[3]} , longitude {row[4]}.")
+    return
+
+connection = mysql.connector.connect(
+    host='127.0.0.1' ,
+    port = '3306',
+    database = 'flight_game',
+    user = 'root',
+    password = '12345',
+    autocommit=True
+         )
+ICAO = input("Enter ICAO: ")
+get_location_by_ICOA(ICAO)
+
+#8.2
+import mysql.connector
+def get_information_by_area_code(area_code):
+    sql = ("SELECT type,COUNT(airport.id) "
+           "FROM airport " 
+           "WHERE iso_country = %s "
+           "GROUP BY type "
+           "ORDER BY type ")
+    cursor = connection.cursor()
+    cursor.execute(sql, (area_code,))
+    result = cursor.fetchall()
+    if result:
+        for row in result:
+            print(f"Airport type: {row[0]}, Number of airports: {row[1]}")
+    else:
+        print("No airports found")
+    return
+connection = mysql.connector.connect(
+    host='127.0.0.1' ,
+    port = '3306',
+    database = 'flight_game',
+    user = 'root',
+    password = '12345',
+    autocommit=True
+         )
+area_code = input("Enter area code: ").upper()
+get_information_by_area_code(area_code)
+
+#8.3
