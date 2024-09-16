@@ -101,3 +101,39 @@ area_code = input("Enter area code: ").upper()
 get_information_by_area_code(area_code)
 
 #8.3
+import mysql.connector
+from geopy.distance import geodesic
+
+connection = mysql.connector.connect(
+    host='127.0.0.1' ,
+    port = '3306',
+    database = 'flight_game',
+    user = 'root',
+    password = '12345',
+    autocommit=True
+         )
+
+def get_distance_by_ICOA(ICAO):
+    sql = "SELECT latitude_deg, longitude_deg FROM airport WHERE ident = %s"
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute(sql, (ICAO,))
+    result = cursor.fetchone()
+    cursor.close()
+    if result:
+        return (result['latitude_deg'], result['longitude_deg'])
+    else:
+        print(f'No data found for ICAO code {icoa_code}')
+        return None
+
+def calculate_distance(icao1, icao2):
+    coords_1 = get_distance_by_ICOA(icao1)
+    coords_2 = get_distance_by_ICOA(icao2)
+    if coords_1 and coords_2:
+        distance = geodesic(coords_1, coords_2).kilometers
+        print(f'The distance between {icao1} and {icao2} is {distance:2f} kilometers')
+    else:
+        print(f'No data found for ICAO code {icoa_code}')
+
+icao1 = input('Enter the ICAO code of the first airport: ')
+icao2 = input('Enter the ICAO code of the second airport: ')
+calculate_distance(icao1,icao2)
